@@ -144,6 +144,7 @@ class GameFetcher:
 
                 # Extract metadata available from the API response
                 time_control = game_data.get("time_control")
+                end_time = game_data.get("end_time")  # Unix timestamp
 
                 try:
                     insert_game(
@@ -153,6 +154,7 @@ class GameFetcher:
                         pgn_raw=pgn_raw,
                         game=parsed_game,
                         time_control=time_control,
+                        end_time=end_time,
                     )
                 except sqlite3.IntegrityError:
                     # Game already in DB (deterministic ID collision) — still

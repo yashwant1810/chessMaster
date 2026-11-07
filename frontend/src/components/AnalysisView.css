@@ -103,7 +103,7 @@
 .av__section { background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 16px; }
 
 /* ====== BOTTOM ====== */
-.av__bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.av__bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; align-items: start; }
 
 /* Game summary */
 .gs h3 { color: #ccc; }

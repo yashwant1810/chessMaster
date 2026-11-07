@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import type { GameAnalysis, AnalyzedMove } from "../types";
 import type { EvalDataPoint } from "../utils/evaluationGraph";
 import { api } from "../api/client";
+import { playSoundForMove } from "../utils/sounds";
 import { sanToEnglish, describeInsight } from "../utils/moveDescription";
 import ChessBoard from "./ChessBoard";
 import MoveNavigator from "./MoveNavigator";
@@ -72,6 +73,16 @@ export default function AnalysisView({ gameId, username: _username }: AnalysisVi
   }, [gameId]);
 
   const handleNavigate = useCallback((index: number) => setCurrentMoveIndex(index), []);
+
+  // Play sound when move changes
+  const prevMoveRef = useRef(currentMoveIndex);
+  useEffect(() => {
+    if (prevMoveRef.current !== currentMoveIndex && analysis) {
+      const move = analysis.moves[currentMoveIndex];
+      if (move) playSoundForMove(move.move_san);
+    }
+    prevMoveRef.current = currentMoveIndex;
+  }, [currentMoveIndex, analysis]);
 
   const currentMove: AnalyzedMove | null = useMemo(() => analysis?.moves[currentMoveIndex] ?? null, [analysis, currentMoveIndex]);
   const currentFen = useMemo(() => currentMove?.position_after ?? STARTING_FEN, [currentMove]);

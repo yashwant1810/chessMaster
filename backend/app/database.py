@@ -6,6 +6,7 @@ wrapped in transactions with a single retry on failure.
 """
 
 import json
+from datetime import datetime, timezone
 import sqlite3
 import uuid
 from functools import wraps
@@ -140,6 +141,7 @@ def insert_game(
     game: ParsedGame,
     time_control: str | None = None,
     opening_name: str | None = None,
+    end_time: int | None = None,
 ) -> str:
     """Insert a parsed game into the database.
 
@@ -171,7 +173,11 @@ def insert_game(
                 pgn_raw,
                 game.event,
                 game.site,
-                game.date,
+                (
+                    datetime.fromtimestamp(end_time, tz=timezone.utc).isoformat()
+                    if end_time
+                    else game.date
+                ),
                 game.round,
                 game.white,
                 game.black,
