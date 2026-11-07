@@ -4,7 +4,7 @@ import type { GameAnalysis, AnalyzedMove } from "../types";
 import type { EvalDataPoint } from "../utils/evaluationGraph";
 import { api } from "../api/client";
 import { playSoundForMove } from "../utils/sounds";
-import { sanToEnglish, describeInsight } from "../utils/moveDescription";
+import CatCoach from "./CatCoach";
 import ChessBoard from "./ChessBoard";
 import MoveNavigator from "./MoveNavigator";
 import MoveList from "./MoveList";
@@ -129,26 +129,7 @@ export default function AnalysisView({ gameId, username: _username }: AnalysisVi
       {/* ROW 2: Insight + Candidates — full width */}
       <div className="av__middle">
         <div className="av__insight-col">
-          <div className="av__coach">
-            <div className="av__coach-avatar">♟</div>
-            <div className="av__coach-text">
-              {currentInsight ? (
-                <>
-                  <span className={`av__badge av__badge--${currentInsight.classification}`}>
-                    {currentInsight.classification}
-                  </span>
-                  <p>{describeInsight(currentInsight.played_move, currentInsight.best_move, currentInsight.classification)}</p>
-                  {currentInsight.principal_variation.length > 0 && (
-                    <p className="av__coach-pv">
-                      <strong>Best line:</strong> {currentInsight.principal_variation.slice(0,4).map(sanToEnglish).join(" → ")}
-                    </p>
-                  )}
-                </>
-              ) : (
-                <p className="av__coach-ok">✓ Good move — no issues here.</p>
-              )}
-            </div>
-          </div>
+          <CatCoach insight={currentInsight} />
         </div>
         <div className="av__cand-col">
           <CandidateMoves candidates={candidateMoves} playerMove={currentMove?.move_san ?? ""} playerEvaluation={playerEval} playerMateIn={playerMateIn} />

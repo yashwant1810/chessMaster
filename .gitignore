@@ -29,3 +29,7 @@ Thumbs.db
 
 # Environment
 .env
+
+# Kokoro TTS model files
+*.onnx
+voices-v1.0.bin

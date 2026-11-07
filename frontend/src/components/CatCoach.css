@@ -1,0 +1,31 @@
+.cat-coach { display: flex; gap: 16px; align-items: center; }
+
+.cat-coach__avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  border: 2px solid #444;
+  transition: border-color 0.2s;
+}
+.cat-coach__avatar--talking {
+  border-color: #4a9eff;
+  box-shadow: 0 0 12px #4a9eff44;
+}
+
+.cat-coach__img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.cat-coach__text { flex: 1; }
+.cat-coach__desc { color: #d0d0d0; line-height: 1.6; font-size: 1.05rem; margin: 0; }
+.cat-coach__ok { color: #56b556; font-size: 1.1rem; font-style: italic; }
+.cat-coach__pv { color: #999; margin-top: 6px; font-size: 0.9rem; }
+.cat-coach__pv strong { color: #81b64c; }
+
+.cat-coach__badge {
+  display: inline-block; padding: 3px 12px; border-radius: 4px;
+  font-size: 0.82rem; font-weight: 700; text-transform: capitalize;
+  margin-bottom: 8px;
+}
+.cat-coach__badge--blunder { background: #e0525222; color: #e05252; border: 1px solid #e0525244; }
+.cat-coach__badge--mistake { background: #e8833a22; color: #e8833a; border: 1px solid #e8833a44; }
+.cat-coach__badge--inaccuracy { background: #f5c54222; color: #f5c542; border: 1px solid #f5c54244; }

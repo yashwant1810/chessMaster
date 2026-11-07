@@ -12,6 +12,7 @@ from app.database import init_db
 from app.routers.analysis import router as analysis_router
 from app.routers.games import router as games_router
 from app.routers.streams import router as streams_router
+from app.routers.tts import router as tts_router
 
 # Initialize database schema on startup
 init_db()
@@ -32,6 +33,7 @@ setup_exception_handlers(app)
 app.include_router(games_router)
 app.include_router(analysis_router)
 app.include_router(streams_router)
+app.include_router(tts_router)
 
 
 @app.get("/health")
