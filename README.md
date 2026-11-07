@@ -1,6 +1,6 @@
 # Chess Review Engine
 
-It aint that serious bro; i was bored so i made it a few hours (claude did). 
+It aint that serious bro; i was bored so i made it in a few hours (claude did). 
 
 A locally-deployed chess review engine that fetches your chess.com games and analyzes them with the Stockfish engine. Browse your games, view move-by-move evaluations, performance ratings, evaluation graphs, and learning insights — all running in Docker with no external dependencies beyond the chess.com public API.
 
