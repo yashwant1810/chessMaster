@@ -1,118 +1,13 @@
-.game-summary {
-  border: 1px solid var(--border, #e5e4e7);
-  border-radius: 6px;
-  background: var(--code-bg, #f4f3ec);
-  padding: 16px;
+.gs h3 { text-align: center; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 14px; }
+.gs__empty { color: #888; text-align: center; padding: 1rem; font-style: italic; }
+.gs__table { width: 100%; border-collapse: collapse; }
+.gs__th-player { font-weight: 600; font-size: 0.9rem; color: #ddd; padding: 6px 12px; text-align: center; }
+.gs__th-label { color: #888; }
+.gs__count { text-align: center; font-size: 1rem; font-weight: 600; color: #ddd; padding: 5px 12px; }
+.gs__label {
+  text-align: center; font-size: 0.85rem; color: #bbb; padding: 5px 8px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-
-.game-summary-title {
-  margin: 0 0 12px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.game-summary-players {
-  display: flex;
-  gap: 24px;
-}
-
-.game-summary-player {
-  flex: 1;
-  min-width: 0;
-}
-
-.game-summary-player-name {
-  margin: 0 0 8px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.game-summary-classifications {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.game-summary-classification-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-}
-
-.game-summary-classification-label {
-  flex: 1;
-}
-
-.game-summary-classification-count {
-  font-weight: 600;
-  min-width: 24px;
-  text-align: right;
-}
-
-/* Reuse the same classification icon styles from MoveList */
-.game-summary .classification-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  font-size: 12px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.game-summary .classification-icon--best {
-  color: #16a34a;
-}
-
-.game-summary .classification-icon--excellent {
-  color: #15803d;
-}
-
-.game-summary .classification-icon--good {
-  color: #2563eb;
-}
-
-.game-summary .classification-icon--inaccuracy {
-  color: #ca8a04;
-}
-
-.game-summary .classification-icon--mistake {
-  color: #ea580c;
-}
-
-.game-summary .classification-icon--blunder {
-  color: #dc2626;
-}
-
-.game-summary-rating {
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border, #e5e4e7);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-}
-
-.game-summary-rating-label {
-  font-weight: 500;
-}
-
-.game-summary-rating-value {
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.game-summary-unavailable {
-  color: var(--text, #333);
-  opacity: 0.6;
-  font-style: italic;
-  margin: 0;
-  padding: 12px 0;
-  text-align: center;
-}
+.gs__dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.gs__rating-row { border-top: 1px solid #333; }
+.gs__rating { text-align: center; font-size: 1.2rem; font-weight: 700; color: #fff; padding: 10px 12px; }

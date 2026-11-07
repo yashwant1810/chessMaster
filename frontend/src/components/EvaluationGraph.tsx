@@ -110,8 +110,8 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div
       style={{
-        background: "#fff",
-        border: "1px solid #ccc",
+        background: "#2a2a2a",
+        border: "1px solid #444", color: "#e0e0e0",
         borderRadius: 4,
         padding: "4px 8px",
         fontSize: "0.8rem",
@@ -191,27 +191,27 @@ export default function EvaluationGraph({
           onClick={handleClick}
           margin={{ top: 10, right: 20, bottom: 5, left: 10 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#333" />
           <XAxis
             dataKey="moveIndex"
             type="number"
             domain={["dataMin", "dataMax"]}
-            tick={{ fontSize: 11 }}
+            tick={{ fontSize: 11, fill: "#999" }}
             label={{
               value: "Move",
               position: "insideBottomRight",
               offset: -5,
-              fontSize: 11,
+              fontSize: 11, fill: "#999",
             }}
           />
           <YAxis
             domain={[-MAX_EVAL, MAX_EVAL]}
-            tick={{ fontSize: 11 }}
+            tick={{ fontSize: 11, fill: "#999" }}
             label={{
               value: "Eval (cp)",
               angle: -90,
               position: "insideLeft",
-              fontSize: 11,
+              fontSize: 11, fill: "#999",
             }}
           />
           <Tooltip content={<CustomTooltip />} />

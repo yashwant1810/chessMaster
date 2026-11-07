@@ -91,8 +91,10 @@ export default function ChessBoard({
             animationDurationInMs: 200,
             boardStyle: {
               borderRadius: "4px",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
             },
+            darkSquareStyle: { backgroundColor: "#779952" },
+            lightSquareStyle: { backgroundColor: "#edeed1" },
           }}
         />
       </div>

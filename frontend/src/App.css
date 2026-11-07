@@ -1,27 +1,24 @@
-.app-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+.app-layout { display: flex; flex-direction: column; min-height: 100vh; }
+.app-header { background: #252525; padding: 10px 20px; border-bottom: 1px solid #333; }
+.app-title-link { text-decoration: none; color: #f0f0f0; }
+.app-title { margin: 0; font-size: 20px; font-weight: 600; }
+.app-main { flex: 1; padding: 24px; }
 
-.app-header {
-  background: var(--code-bg, #f4f3ec);
-  border-bottom: 1px solid var(--border, #e5e4e7);
-  padding: 12px 24px;
+/* Forms */
+.profile-input { max-width: 480px; }
+.profile-input label { display: block; margin-bottom: 6px; color: #aaa; font-size: 0.85rem; }
+.profile-input input {
+  width: 100%; padding: 10px 12px; border: 1px solid #444; border-radius: 6px;
+  background: #2a2a2a; color: #f0f0f0; font-size: 0.95rem;
 }
+.profile-input input:focus { outline: none; border-color: #4a9eff; }
+.profile-input button {
+  margin-top: 10px; padding: 10px 24px; background: #4a9eff; color: #fff;
+  border: none; border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+}
+.profile-input button:hover:not(:disabled) { background: #5eadff; }
+.profile-input button:disabled { opacity: 0.5; cursor: not-allowed; }
+.profile-input__error { color: #ef5350; margin: 6px 0; font-size: 0.85rem; }
 
-.app-title-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.app-title {
-  margin: 0;
-  font-size: 24px;
-  letter-spacing: -0.5px;
-}
-
-.app-main {
-  flex: 1;
-  padding: 24px;
-}
+h2, h3 { color: #f0f0f0; }
+.unavailable { color: #666; font-style: italic; }

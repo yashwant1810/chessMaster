@@ -1,0 +1,128 @@
+.av { max-width: 1360px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+.av__status { text-align: center; padding: 3rem; color: #ccc; font-size: 1.1rem; }
+.av__status--err { color: #ef5350; }
+
+/* ====== ROW 1: Board + Moves ====== */
+.av__top { display: flex; border: 1px solid #333; border-radius: 4px; }
+.av__board-col { flex-shrink: 0; display: flex; flex-direction: column; background: #1e1e1e; }
+/* No border-radius on the board container — don't clip coordinates */
+.av__board-col .chess-board-container { border-radius: 0 !important; }
+.av__board-col .chess-board-wrapper { border-radius: 0 !important; }
+
+
+.av__moves-col {
+  flex: 1; min-width: 280px;
+  background: #1a1a1a;
+  overflow-y: auto;
+  max-height: 730px;
+  border-left: 1px solid #333;
+}
+
+/* Move rows — bigger, more readable */
+.move-list-container table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.move-list-container th {
+  background: #222; padding: 10px 14px; font-size: 0.72rem; color: #888;
+  text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 1;
+  border-bottom: 1px solid #333;
+}
+.move-list-container td { padding: 10px 14px; border-bottom: 1px solid #2a2a2a; cursor: pointer; color: #ccc; }
+.move-list-container tr:hover td { background: #252525; }
+.move-list-cell-move--active { background: #4a9eff18 !important; border-left: 3px solid #4a9eff; }
+.move-list-cell-number { color: #555; text-align: center; width: 40px; font-size: 0.9rem; }
+
+/* ====== ROW 2: Insight + Candidates — same width as row 1 ====== */
+.av__middle {
+  display: flex;
+  border: 1px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.av__insight-col {
+  /* Same width as the board column: 680px board + 26px eval bar = 706px */
+  flex: 0 0 706px;
+  background: #1a1a1a;
+  padding: 24px;
+  border-right: 1px solid #333;
+  display: flex;
+  align-items: center; /* vertically center the insight content */
+}
+
+.av__cand-col {
+  /* Fills remaining space = same width as moves panel above */
+  flex: 1;
+  min-width: 280px;
+  background: #1e1e1e;
+  padding: 16px;
+}
+
+/* Coach — bigger avatar, bigger text */
+.av__coach { display: flex; gap: 18px; align-items: center; }
+.av__coach-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #2a2a2a; border: 2px solid #444;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+}
+.av__coach-text { flex: 1; }
+.av__coach-text p { color: #d0d0d0; line-height: 1.6; font-size: 1.1rem; margin: 0; }
+.av__coach-ok { color: #56b556 !important; font-size: 1.15rem !important; }
+.av__coach-pv { color: #999 !important; margin-top: 8px !important; font-size: 0.95rem !important; }
+.av__coach-pv strong { color: #81b64c; }
+
+.av__badge {
+  display: inline-block; padding: 3px 12px; border-radius: 4px;
+  font-size: 0.85rem; font-weight: 700; text-transform: capitalize;
+  margin-bottom: 10px;
+}
+.av__badge--blunder { background: #e0525222; color: #e05252; border: 1px solid #e0525244; }
+.av__badge--mistake { background: #e8833a22; color: #e8833a; border: 1px solid #e8833a44; }
+.av__badge--inaccuracy { background: #f5c54222; color: #f5c542; border: 1px solid #f5c54244; }
+
+/* ====== NAV ====== */
+.move-nav {
+  display: flex; justify-content: center; align-items: center; gap: 4px;
+  padding: 8px 0; background: #1e1e1e;
+}
+.nav-btn {
+  background: #2a2a2a; color: #ccc; border: 1px solid #333; border-radius: 4px;
+  width: 42px; height: 34px; font-size: 1rem; cursor: pointer; transition: all 0.12s;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-btn:hover:not(:disabled) { background: #3a3a3a; color: #fff; border-color: #555; }
+.nav-btn:disabled { opacity: 0.15; cursor: default; }
+.nav-btn--play {
+  width: 56px; border-radius: 20px; background: #2a2a2a;
+  font-size: 0.9rem; font-weight: 700;
+}
+.nav-btn--play:hover { background: #4a9eff !important; color: #fff !important; border-color: #4a9eff !important; }
+.nav-btn--playing { background: #4a9eff !important; color: #fff !important; border-color: #4a9eff !important; }
+.nav-count { color: #666; font-size: 0.82rem; margin-left: 10px; font-variant-numeric: tabular-nums; }
+
+/* ====== SECTIONS ====== */
+.av__section { background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 16px; }
+
+/* ====== BOTTOM ====== */
+.av__bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+/* Game summary */
+.gs h3 { color: #ccc; }
+.gs__table td, .gs__table th { color: #d0d0d0; }
+
+/* Eval bar */
+.evaluation-bar { width: 26px !important; min-width: 26px; border-radius: 0 !important; }
+
+/* Eval graph */
+.eval-graph__title { font-size: 0.85rem; color: #ccc; margin-bottom: 8px; }
+.perf-graph__title { font-size: 0.85rem; color: #ccc; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+@media (max-width: 1100px) {
+  .av__top { flex-direction: column; }
+  .av__board-col { width: 100%; max-width: 700px; margin: 0 auto; }
+  
+.av__moves-col { max-height: 280px; border-left: none; border-top: 1px solid #333; }
+  .av__middle { flex-direction: column; }
+  .av__insight-col { flex: 1 1 auto; }
+  .av__cand-col { width: auto; border-top: 1px solid #333; }
+  .av__bottom { grid-template-columns: 1fr; }
+}

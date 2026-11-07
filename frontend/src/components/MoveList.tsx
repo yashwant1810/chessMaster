@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { AnalyzedMove, MoveClassification } from "../types";
 import "./MoveList.css";
 
@@ -126,6 +126,13 @@ export default function MoveList({
   onSelect,
 }: MoveListProps) {
   const rows = groupMovesIntoRows(moves);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to keep current move visible
+  useEffect(() => {
+    const cell = containerRef.current?.querySelector(`[data-testid="move-cell-${currentMove}"]`);
+    if (cell) cell.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [currentMove]);
 
   const handleSelect = useCallback(
     (index: number) => () => onSelect(index),
@@ -151,7 +158,7 @@ export default function MoveList({
   }
 
   return (
-    <div className="move-list-container" data-testid="move-list">
+    <div className="move-list-container" data-testid="move-list" ref={containerRef}>
       <table className="move-list-table" role="grid" aria-label="Move list">
         <thead>
           <tr>

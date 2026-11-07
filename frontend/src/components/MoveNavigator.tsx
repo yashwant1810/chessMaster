@@ -1,101 +1,73 @@
-import { useCallback, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface MoveNavigatorProps {
-  /** Current move index: 0 = initial position, totalMoves = last move. */
   currentMove: number;
-  /** Total number of half-moves in the game. */
   totalMoves: number;
-  /** Callback to navigate to a specific move index. */
   onNavigate: (moveIndex: number) => void;
+  insightIndices?: Set<number>;
 }
 
-/**
- * MoveNavigator — first/previous/next/last navigation controls with keyboard support.
- *
- * Requirements: 10.2, 10.3, 10.4, 10.7, 10.8
- */
-export default function MoveNavigator({
-  currentMove,
-  totalMoves,
-  onNavigate,
-}: MoveNavigatorProps) {
+export default function MoveNavigator({ currentMove, totalMoves, onNavigate, insightIndices }: MoveNavigatorProps) {
+  const [playing, setPlaying] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const moveRef = useRef(currentMove);
+  moveRef.current = currentMove;
+
   const isAtStart = currentMove <= 0;
   const isAtEnd = currentMove >= totalMoves;
 
-  const goFirst = useCallback(() => {
-    if (!isAtStart) onNavigate(0);
-  }, [isAtStart, onNavigate]);
+  // Find previous/next insight from current position
+  const goPrevInsight = () => {
+    if (!insightIndices || insightIndices.size === 0) { onNavigate(0); return; }
+    for (let i = currentMove - 1; i >= 0; i--) { if (insightIndices.has(i)) { setPlaying(false); onNavigate(i); return; } }
+    onNavigate(0);
+  };
+  const goNextInsight = () => {
+    if (!insightIndices || insightIndices.size === 0) { onNavigate(totalMoves); return; }
+    for (let i = currentMove + 1; i <= totalMoves; i++) { if (insightIndices.has(i)) { setPlaying(false); onNavigate(i); return; } }
+    onNavigate(totalMoves);
+  };
 
-  const goPrevious = useCallback(() => {
-    if (!isAtStart) onNavigate(currentMove - 1);
-  }, [isAtStart, currentMove, onNavigate]);
-
-  const goNext = useCallback(() => {
-    if (!isAtEnd) onNavigate(currentMove + 1);
-  }, [isAtEnd, currentMove, onNavigate]);
-
-  const goLast = useCallback(() => {
-    if (!isAtEnd) onNavigate(totalMoves);
-  }, [isAtEnd, totalMoves, onNavigate]);
-
-  // Global keyboard handler for left/right arrow keys
+  // Auto-play
   useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        if (currentMove > 0) onNavigate(currentMove - 1);
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        if (currentMove < totalMoves) onNavigate(currentMove + 1);
-      }
+    if (!playing) return;
+    function step() {
+      const next = moveRef.current + 1;
+      if (next > totalMoves) { setPlaying(false); return; }
+      onNavigate(next);
+      if (insightIndices?.has(next)) { setPlaying(false); return; }
+      timerRef.current = setTimeout(step, 1000);
     }
+    timerRef.current = setTimeout(step, 800);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [playing, totalMoves, onNavigate, insightIndices]);
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [currentMove, totalMoves, onNavigate]);
+  useEffect(() => { if (isAtEnd && playing) setPlaying(false); }, [isAtEnd, playing]);
+
+  // Keyboard
+  useEffect(() => {
+    const stop = () => { setPlaying(false); if (timerRef.current) clearTimeout(timerRef.current); };
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); stop(); if (moveRef.current > 0) onNavigate(moveRef.current - 1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); stop(); if (moveRef.current < totalMoves) onNavigate(moveRef.current + 1); }
+      else if (e.key === " ") { e.preventDefault(); setPlaying(p => !p); }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [totalMoves, onNavigate]);
+
+  const stop = () => { setPlaying(false); if (timerRef.current) clearTimeout(timerRef.current); };
 
   return (
-    <nav
-      className="move-navigator"
-      aria-label="Move navigation"
-      role="navigation"
-    >
-      <button
-        className="move-navigator__btn"
-        onClick={goFirst}
-        disabled={isAtStart}
-        aria-label="First move"
-        title="First move"
-      >
-        ⏮
+    <nav className="move-nav">
+      <button className="nav-btn" onClick={() => { stop(); goPrevInsight(); }} disabled={isAtStart} title="Previous insight (⏮)">⏮</button>
+      <button className="nav-btn" onClick={() => { stop(); if (!isAtStart) onNavigate(currentMove - 1); }} disabled={isAtStart} title="Previous move (←)">‹</button>
+      <button className={`nav-btn nav-btn--play ${playing ? "nav-btn--playing" : ""}`} onClick={() => setPlaying(p => !p)} title="Auto-play / Pause (Space)">
+        {playing ? "⏸" : "▶"}
       </button>
-      <button
-        className="move-navigator__btn"
-        onClick={goPrevious}
-        disabled={isAtStart}
-        aria-label="Previous move"
-        title="Previous move"
-      >
-        ◀
-      </button>
-      <button
-        className="move-navigator__btn"
-        onClick={goNext}
-        disabled={isAtEnd}
-        aria-label="Next move"
-        title="Next move"
-      >
-        ▶
-      </button>
-      <button
-        className="move-navigator__btn"
-        onClick={goLast}
-        disabled={isAtEnd}
-        aria-label="Last move"
-        title="Last move"
-      >
-        ⏭
-      </button>
+      <button className="nav-btn" onClick={() => { stop(); if (!isAtEnd) onNavigate(currentMove + 1); }} disabled={isAtEnd} title="Next move (→)">›</button>
+      <button className="nav-btn" onClick={() => { stop(); goNextInsight(); }} disabled={isAtEnd} title="Next insight (⏭)">⏭</button>
+      <span className="nav-count">{currentMove} / {totalMoves}</span>
     </nav>
   );
 }

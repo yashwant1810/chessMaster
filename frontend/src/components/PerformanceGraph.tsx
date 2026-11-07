@@ -110,7 +110,7 @@ export default function PerformanceGraph({
             data={data}
             margin={{ top: 10, right: 20, bottom: 5, left: 10 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
             <XAxis
               dataKey="moveNumber"
               type="number"
@@ -131,14 +131,14 @@ export default function PerformanceGraph({
                 offset: 10,
               }}
             />
-            <Tooltip
+            <Tooltip contentStyle={{ background: "#2a2a2a", border: "1px solid #444", color: "#e0e0e0", borderRadius: 4 }} itemStyle={{ color: "#e0e0e0" }} labelStyle={{ color: "#999" }}
               formatter={(value, name) => [
                 value,
                 name === "white" ? "White" : "Black",
               ]}
               labelFormatter={(label) => `Move ${label}`}
             />
-            <Legend />
+            <Legend wrapperStyle={{ color: "#999" }} />
             {currentMoveNumber > 0 && currentMoveNumber <= data.length && (
               <ReferenceLine
                 x={currentMoveNumber}

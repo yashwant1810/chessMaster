@@ -106,28 +106,38 @@ async def start_analysis(
 ) -> JSONResponse:
     """Start Stockfish analysis for a game.
 
-    Returns 202 on success.
-    Returns 409 if analysis is already in progress for this game.
+    Returns 202 on success (analysis started).
+    Returns 200 if analysis is already complete.
+    Returns 409 if analysis is currently running.
     Returns 404 if the game does not exist.
     """
-    # Check if analysis is already running (in-memory tracking).
-    if game_id in _running_analyses:
-        raise HTTPException(
-            status_code=409,
-            detail={
-                "error": "analysis_in_progress",
-                "message": "Analysis is already running for this game",
-            },
-        )
-
     # Verify the game exists in the database.
     game = get_game(conn, game_id)
     if game is None:
-        raise HTTPException(
+        return JSONResponse(
             status_code=404,
-            detail={
-                "error": "game_not_found",
-                "message": "Game not found",
+            content={"error": "game_not_found", "message": "Game not found"},
+        )
+
+    # Check if analysis is already complete in the database.
+    summary = get_analysis_summary(conn, game_id)
+    if summary is not None and summary["is_complete"]:
+        return JSONResponse(
+            status_code=200,
+            content={
+                "game_id": game_id,
+                "message": "Analysis already complete",
+                "is_complete": True,
+            },
+        )
+
+    # Check if analysis is currently running (in-memory tracking).
+    if game_id in _running_analyses:
+        return JSONResponse(
+            status_code=409,
+            content={
+                "error": "analysis_in_progress",
+                "message": "Analysis is already running for this game",
             },
         )
 
@@ -166,17 +176,46 @@ async def get_analysis_results(
     summary = get_analysis_summary(conn, game_id)
 
     if not analysis_moves or summary is None:
-        raise HTTPException(
+        return JSONResponse(
             status_code=404,
-            detail={
+            content={
                 "error": "analysis_not_found",
                 "message": "Analysis not available. Run analysis first.",
             },
         )
 
+    # Transform flat DB rows to nested objects matching frontend types
+    transformed_moves = []
+    for m in analysis_moves:
+        transformed_moves.append({
+            "move_number": m.get("move_index", 0) // 2 + 1,
+            "is_white": bool(m.get("is_white")),
+            "move_san": m.get("move_san", ""),
+            "position_before": m.get("fen_before", ""),
+            "position_after": m.get("fen_after", ""),
+            "evaluation_before": {
+                "fen": m.get("fen_before", ""),
+                "evaluation": m.get("eval_before"),
+                "mate_in": m.get("mate_before"),
+                "candidate_moves": [],
+                "is_error": False,
+            },
+            "evaluation_after": {
+                "fen": m.get("fen_after", ""),
+                "evaluation": m.get("eval_after"),
+                "mate_in": m.get("mate_after"),
+                "candidate_moves": m.get("candidate_moves", []),
+                "is_error": False,
+            },
+            "classification": m.get("classification"),
+            "centipawn_loss": m.get("centipawn_loss"),
+            "candidate_moves": m.get("candidate_moves", []),
+            "insight": m.get("insight"),
+        })
+
     return {
         "game_id": game_id,
-        "moves": analysis_moves,
+        "moves": transformed_moves,
         "white_summary": {
             "best_count": summary["white_best"],
             "excellent_count": summary["white_excellent"],
@@ -184,8 +223,8 @@ async def get_analysis_results(
             "inaccuracy_count": summary["white_inaccuracy"],
             "mistake_count": summary["white_mistake"],
             "blunder_count": summary["white_blunder"],
-            "performance_ratings": summary["white_performance_ratings"],
-            "final_performance_rating": summary["white_final_rating"],
+            "performance_ratings": summary["white_performance_ratings"] or [],
+            "final_performance_rating": summary["white_final_rating"] or 0,
         },
         "black_summary": {
             "best_count": summary["black_best"],
@@ -194,8 +233,8 @@ async def get_analysis_results(
             "inaccuracy_count": summary["black_inaccuracy"],
             "mistake_count": summary["black_mistake"],
             "blunder_count": summary["black_blunder"],
-            "performance_ratings": summary["black_performance_ratings"],
-            "final_performance_rating": summary["black_final_rating"],
+            "performance_ratings": summary["black_performance_ratings"] or [],
+            "final_performance_rating": summary["black_final_rating"] or 0,
         },
         "evaluations": [m.get("eval_after") for m in analysis_moves],
         "is_complete": summary["is_complete"],
@@ -238,9 +277,9 @@ async def get_analysis_status(
         }
 
     # No analysis found at all.
-    raise HTTPException(
+    return JSONResponse(
         status_code=404,
-        detail={
+        content={
             "error": "analysis_not_found",
             "message": "Analysis not available. Run analysis first.",
         },
