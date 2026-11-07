@@ -1,0 +1,119 @@
+.candidate-moves {
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.candidate-moves-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.candidate-moves-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.candidate-move-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.55rem;
+  border-radius: 4px;
+  background: #f3f4f6;
+  transition: background 0.15s;
+}
+
+.candidate-move-item:hover {
+  background: #e5e7eb;
+}
+
+.candidate-move-item--player {
+  background: #dbeafe;
+  border-left: 3px solid #2563eb;
+}
+
+.candidate-move-item--player:hover {
+  background: #bfdbfe;
+}
+
+.candidate-move-rank {
+  font-weight: 700;
+  color: #9ca3af;
+  margin-right: 0.5rem;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.candidate-move-san {
+  font-weight: 600;
+  flex: 1;
+}
+
+.candidate-move-eval {
+  font-variant-numeric: tabular-nums;
+  color: #4b5563;
+  font-weight: 500;
+  margin-left: 0.75rem;
+}
+
+.candidate-move-player-badge {
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Player's actual move row (below the candidate list) */
+.candidate-moves-player {
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.candidate-moves-player-label {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.candidate-moves-player-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.55rem;
+  border-radius: 4px;
+  background: #fef9c3;
+  border-left: 3px solid #ca8a04;
+}
+
+.candidate-moves-player-san {
+  font-weight: 600;
+  flex: 1;
+}
+
+.candidate-moves-player-eval {
+  font-variant-numeric: tabular-nums;
+  color: #4b5563;
+  font-weight: 500;
+  margin-left: 0.75rem;
+}
+
+.candidate-moves-empty {
+  color: #9ca3af;
+  font-style: italic;
+  padding: 0.5rem 0;
+}

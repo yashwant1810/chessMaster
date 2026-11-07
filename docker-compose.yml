@@ -1,0 +1,48 @@
+# Docker Compose configuration for Chess Review Engine
+# Usage:
+#   Start:  docker compose up
+#   Stop:   docker compose down
+#   Build:  docker compose build
+#
+# Environment variables (set in .env or shell):
+#   FRONTEND_PORT - Host port for the UI (default: 3000)
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: chess-engine-backend
+    environment:
+      - STOCKFISH_PATH=/usr/games/stockfish
+    networks:
+      - chess-engine-net
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "{{.Name}}"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: chess-engine-frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    networks:
+      - chess-engine-net
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "{{.Name}}"
+
+networks:
+  chess-engine-net:
+    driver: bridge
+    internal: false

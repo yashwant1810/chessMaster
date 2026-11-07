@@ -1,0 +1,79 @@
+/* ------------------------------------------------------------------ */
+/* ProgressIndicator                                                  */
+/* ------------------------------------------------------------------ */
+
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #f8f8f6;
+  border: 1px solid #e5e4e7;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+
+/* --- Analysis: progress bar ---------------------------------------- */
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: #e0e0de;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.progress-indicator__text {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* --- Fetch: animated dots ------------------------------------------ */
+
+.progress-indicator__dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  animation: dot-pulse 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-pulse {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

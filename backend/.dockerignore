@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+chess_review_engine.egg-info/
+
+# Test files (not needed in production image)
+tests/
+.pytest_cache/
+.hypothesis/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

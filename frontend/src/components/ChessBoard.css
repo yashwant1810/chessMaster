@@ -1,0 +1,11 @@
+.chess-board-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.chess-board-wrapper {
+  flex-shrink: 0;
+  line-height: 0; /* Remove inline-block gap from SVG rendering */
+}

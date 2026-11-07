@@ -1,0 +1,28 @@
+.eval-graph {
+  width: 100%;
+  min-height: 200px;
+}
+
+.eval-graph__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.eval-graph__empty {
+  color: #888;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* Recharts overrides */
+.eval-graph .recharts-cartesian-grid-horizontal line,
+.eval-graph .recharts-cartesian-grid-vertical line {
+  stroke: #e0e0e0;
+}
+
+.eval-graph .recharts-reference-line line {
+  stroke: #1976d2;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}

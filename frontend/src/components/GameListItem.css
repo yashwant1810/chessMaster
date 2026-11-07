@@ -1,0 +1,39 @@
+.game-list-item {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.game-list-item:hover,
+.game-list-item:focus-visible {
+  background: var(--accent-bg);
+  outline: none;
+}
+
+.game-cell {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.game-result {
+  font-weight: 600;
+}
+
+.result-win {
+  color: #16a34a;
+}
+
+.result-loss {
+  color: #dc2626;
+}
+
+.result-draw {
+  color: #ca8a04;
+}
+
+.unavailable {
+  color: var(--text);
+  font-style: italic;
+  opacity: 0.6;
+}

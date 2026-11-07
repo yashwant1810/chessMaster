@@ -1,0 +1,138 @@
+.move-list-container {
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 6px;
+  background: var(--code-bg, #f4f3ec);
+}
+
+.move-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.move-list-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--code-bg, #f4f3ec);
+}
+
+.move-list-header {
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border, #e5e4e7);
+  white-space: nowrap;
+}
+
+.move-list-header-number {
+  width: 44px;
+  text-align: center;
+}
+
+.move-list-row {
+  border-bottom: 1px solid var(--border, #e5e4e7);
+}
+
+.move-list-cell {
+  padding: 6px 10px;
+  vertical-align: middle;
+}
+
+.move-list-cell-number {
+  text-align: center;
+  color: var(--text, #333);
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.move-list-cell-move {
+  cursor: pointer;
+  transition: background 0.12s ease;
+  border-radius: 4px;
+}
+
+.move-list-cell-move:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.move-list-cell-move:focus-visible {
+  outline: 2px solid var(--accent, #3b82f6);
+  outline-offset: -2px;
+}
+
+.move-list-cell-move--active {
+  background: rgba(59, 130, 246, 0.15);
+  font-weight: 600;
+}
+
+.move-list-cell-move--active:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+/* Move text with classification icon */
+.move-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Classification icons — each category has a unique color + shape */
+.classification-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.classification-icon--best {
+  color: #16a34a; /* green */
+}
+
+.classification-icon--excellent {
+  color: #15803d; /* dark green */
+}
+
+.classification-icon--good {
+  color: #2563eb; /* blue */
+}
+
+.classification-icon--inaccuracy {
+  color: #ca8a04; /* yellow */
+}
+
+.classification-icon--mistake {
+  color: #ea580c; /* orange */
+}
+
+.classification-icon--blunder {
+  color: #dc2626; /* red */
+}
+
+/* Classification unavailable indicator */
+.classification-unavailable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+  color: var(--text, #333);
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.move-list-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--text, #333);
+  opacity: 0.6;
+  font-style: italic;
+}
